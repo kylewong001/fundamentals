@@ -1,0 +1,159 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+//kyle wong mergesort and binary search algorithm
+int search(vector<int>& list, int target) {
+    int mid, left= 0, right= list.size()-1;
+
+    while(left<=right){
+        mid = left + (right-left)/2;
+        if(list[mid] == target){
+            return mid;
+        }
+        else if(list[mid]<target){
+            left = mid +1;
+        }
+        else
+            right = mid-1;
+    }
+    return -1;
+}
+
+void merge(vector<int>& list, int left, int mid, int right) {
+
+//lengths of temporary arrays
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+// Empty vectors to store halves of the array
+    vector<int> L(n1);
+    vector<int> R(n2);
+
+// Copy data to temporary vectors L[] and R[]
+    for (int i = 0; i < n1; i++)
+        L[i] = list[left + i];
+    for (int i = 0; i < n2; i++)
+        R[i] = list[mid + 1 + i];
+
+//index of first half of the array
+    int i = 0;
+//index of second half of the array
+    int j = 0;
+//index of sorted array
+    int k = left;
+
+//comparison between arrays, and assignment to new sorted array
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            list[k] = L[i];
+            i++;
+        } else {
+            list[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+//Add remaining values in the first half of the array if any remain
+    while (i < n1) {
+        list[k] = L[i];
+        i++;
+        k++;
+    }
+
+//Add remaining values in the second half of the array if any remain
+    while (j < n2) {
+        list[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+
+
+void mergeSort(vector<int>& list, int left, int right){
+    if (left < right){
+
+        int m = left + (right - left) / 2;
+
+// Sort first and second half
+        mergeSort(list, left, m);
+        mergeSort(list, m + 1, right);
+
+// Merge the sorted halves
+        merge(list, left, m, right);
+    }
+}
+
+int main() {
+    int length = 0, input;
+    vector<int> list;
+//user inputs length of data list
+    cout<<"Enter the length of list: ";
+    cin>> length;
+
+//handles erroneous input
+    while(length <= 0) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Invalid input, please re-enter a whole number greater than zero." << endl;
+        cin >> length;
+    }
+
+//loop to add data based on given lenth
+    for(int i = 0; i < length; i++){
+        cout<<"Please enter data: ";
+        cin>> input;
+        cout<< endl;
+
+//handles erroneous input
+        while(! cin) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Invalid input, please enter a number: ";
+            cin >> input;
+        }
+//add user input to list
+        list.insert(list.end(),input);
+    }
+//output original list
+    cout << "The original array: ";
+    for (int num : list)
+        cout << num << " ";
+    cout << endl;
+
+//call sort function
+    mergeSort(list, 0, list.size() - 1);
+
+//output sorted list
+    cout << "The sorted array: ";
+    for (int num : list)
+        cout << num << " ";
+
+    cout << endl;
+    cout << endl;
+
+//user inputs target value for binary search
+    int target = 0;
+    cout<<"Please enter a target value: ";
+    cin>>target;
+
+//handles erroneous input
+    while(! cin) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Invalid input, please enter a number: ";
+        cin >> target;
+    }
+//call to binary search function
+
+    if(search(list, target) != -1){
+//case #1: Target value is found, and the location in the array is returned
+       cout<<"The target value is in the array. It is in position: " << (search(list, target))+1;
+    }
+    else
+//case #2: Target value is not locatd, and user is informed
+        cout<<"The target value is not in the array";
+
+    return 0;
+}
