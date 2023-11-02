@@ -1,0 +1,28 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+double monthlyPayment(double interestRate, double loanAmount, double term){
+    double x = pow((1+interestRate/1200),-12*term);
+    double y = interestRate/1200; 
+    double z = (1-x)/y;
+    return z;
+}
+
+int main()
+{
+    double rate, amount, term;
+    cout<<"Please enter your interest rate: ";
+    cin >> rate;
+    cout<<endl;
+    
+    cout<<"Please enter your loan amount: ";
+    cin >> amount;
+    cout<< endl;
+    
+    cout<<"Please enter the term: ";
+    cin>>term;
+    cout<<endl;
+    
+    cout<<"Your monthly payment is: " << monthlyPayment(rate, amount, term);
+    return 0;
+}
