@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+int GCD(int x, int y){
+//variable created to store the modulus
+    int r;
+//comparison to determine which input we use to take the modulus of
+    if(x>y){
+     r = x%y;
+//if target value is found, the GCD is returned
+        if(r == 0){
+            return y;
+        }
+//if target value is not found, a recursive call is made with new inputs
+        else
+            GCD(y, r);
+    }
+    else{
+        r=y%x;
+
+        if(r == 0){
+            return x;
+        }
+        else
+            GCD(x, r);
+    }
+}
+
+int main(){
+// variables to store user input
+    int a, b;
+
+    cout<<"Enter two numbers to find the greatest common denominator." << endl;
+//user inputs first variable
+    cin>> a;
+//erroneous input
+    while(! cin) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Invalid input, please enter a number: ";
+        cin >> a;
+    }
+//user inputs second variable
+        cin >> b;
+//erroneous input
+        while (!cin) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Invalid input, please enter a number: ";
+            cin >> b;
+        }
+
+//call to function, and output of data
+    cout << "The greatest common denominator of the two inputs is: " << GCD(a, b);
+
+    return 0;
+}
