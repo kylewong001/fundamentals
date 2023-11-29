@@ -1,0 +1,24 @@
+
+#include <iostream>
+
+using namespace std;
+
+
+int search(string x, char b){
+    int count = -1;
+    for (int i = 0; i<x.length(); i++){
+        if(x[i] == b){
+            return i;
+        }
+    }
+    return -1;
+}
+int main()
+{
+    char b = 'c';
+    char c = 'd';
+    string x = "My dog goes to the store to get treats";
+    cout<< search(x,b) << endl;
+    cout<< search(x,c);
+    return 0;
+}
